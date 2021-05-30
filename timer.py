@@ -3,12 +3,24 @@ from time import sleep
 
 ####################function###############
 
-def start(v,o):
+tick = True
+
+def start(v, o):
+    global tick
+    tick = True
     while v:
+        if not tick:
+            return
         sleep(1)
         v -=1
         o.set(v)
         root.update()
+
+
+def stop():
+    global tick
+    tick = False
+    var1.set(var2.get())
 
 ##########################################
 root = Tk()
@@ -27,5 +39,9 @@ l2.grid(row=1, column=0, columnspan=2)
 b1 = Button(root, text="Start", 
 command= lambda:start(int(var1.get()), var2))
 b1.grid(row=2, column=0, columnspan=2, sticky='we')
+
+b1 = Button(root, text="Stop", 
+command= stop)
+b1.grid(row=3, column=0, columnspan=2, sticky='we')
 
 root.mainloop()
