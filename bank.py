@@ -1,5 +1,31 @@
 from tkinter import *
+from datetime import datetime
 
+# #########functions###########
+
+
+def get_date():
+    dt = datetime.now()
+    return dt.strftime('%d %b %Y')
+
+
+def get_time():
+    dt = datetime.now()
+    return dt.strftime("%H:%M:%S")
+
+
+def get_number():
+    global counter, counter_list
+    counter += 1
+    counter_list.append(counter)
+    con['date']['textvariable'].set(get_date())
+    con['time']['textvariable'].set(get_time())
+    con['number']['textvariable'].set("Your Turn {}".format(counter))
+    con['waiting']['textvariable'].set("Waiting {}".format(len(counter_list)))
+
+
+counter = 0
+counter_list = []
 root = Tk()
 root.title('bank turning')
 root.geometry('190x250')
@@ -36,7 +62,7 @@ con = {
         'height':5,
         'bg':'#74b559'
     },
-    'lop1':{
+    'lop1': {
         'textvariable': StringVar(),
         'width': 10,
         'height':2,
@@ -52,41 +78,36 @@ con = {
         'textvariable': StringVar(),
         'width': 10,
         'height':2,
-        'bg':'#11bccf'
+        'bg': '#11bccf'
     },
     'number': {
         'textvariable': StringVar(),
-        'width': 10,
-        'height':2,
     },
     'waiting': {
         'textvariable': StringVar(),
-        'width': 10,
-        'height':2,
+
     },
     'time': {
         'textvariable': StringVar(),
-        'width': 10,
-        'height':2,
+
     },
     'date': {
         'textvariable': StringVar(),
-        'width': 10,
-        'height':2,
+
     }
 
 }
 
-Button(root, cnf=con['turn']).grid(row=0, column=0, padx=42, pady=5)
+Button(root, cnf=con['turn'], command=get_number).grid(row=0, column=0, padx=42, pady=5)
 Button(root, cnf=con['cancel'], command=root.destroy).grid(row=1, column=0, padx=42, pady=10)
 customers = Toplevel()
 customers.title("Customers")
 customers.geometry("200x200")
 customers.configure(bg="#e8ebbc")
-Label(customers, cnf=con['number']).grid(row=1, column=0, padx=45, pady=25)
-Label(customers, cnf=con['waiting']).grid(row=2, column=0, padx=45, pady=25)
-Label(customers, cnf=con['time']).grid(row=3, column=0, padx=45, pady=25)
-Label(customers, cnf=con['date']).grid(row=4, column=0, padx=45, pady=25)
+Label(customers, cnf=con['number']).grid(row=0, column=0, padx=45)
+Label(customers, cnf=con['waiting']).grid(row=1, column=0, padx=45)
+Label(customers, cnf=con['time']).grid(row=2, column=0, padx=45)
+Label(customers, cnf=con['date']).grid(row=3, column=0, padx=45)
 
 operators = Toplevel()
 operators.title("Operators")
